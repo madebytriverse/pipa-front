@@ -4,7 +4,7 @@ export default function TypingBubbles() {
   return (
     <div className="flex items-center gap-1 bg-gray-100 p-3 rounded-2xl w-fit shadow-sm">
       <motion.span
-        className="w-2.5 h-2.5 bg-gradient-to-br from-contrast-main to-contrast-secondary rounded-full"
+        className="w-2.5 h-2.5 bg-naranja rounded-full"
         animate={{
           y: [0, -6, 0],
         }}
@@ -16,7 +16,7 @@ export default function TypingBubbles() {
         }}
       />
       <motion.span
-        className="w-2.5 h-2.5 bg-gradient-to-br from-contrast-main to-contrast-secondary rounded-full"
+        className="w-2.5 h-2.5 bg-naranja rounded-full"
         animate={{
           y: [0, -6, 0],
         }}
@@ -29,7 +29,7 @@ export default function TypingBubbles() {
         }}
       />
       <motion.span
-        className="w-2.5 h-2.5 bg-gradient-to-br from-contrast-main to-contrast-secondary rounded-full"
+        className="w-2.5 h-2.5 bg-naranja rounded-full"
         animate={{
           y: [0, -6, 0],
         }}

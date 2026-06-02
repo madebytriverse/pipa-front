@@ -154,9 +154,9 @@ export function Chatbot() {
           }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
           className="cursor-pointer
- fixed flex items-center bg-gradient-to-br from-contrast-main to-contrast-secondary text-white p-5 rounded-full shadow-2xl 
-          transition-all duration-300 z-50 overflow-hidden 
-          bottom-6 right-4 sm:bottom-8 sm:right-8 md:bottom-8 md:right-10 group-hover:bg-contrast-secondary"
+ fixed flex items-center bg-naranja text-white p-5 rounded-full shadow-2xl
+          transition-all duration-300 z-50 overflow-hidden
+          bottom-6 right-4 sm:bottom-8 sm:right-8 md:bottom-8 md:right-10 group-hover:bg-chocolate"
           title="Abrir chat"
         >
           <IconBubbleTextFilled className="group-hover:rotate-360 transition-all duration-300" />
@@ -223,7 +223,7 @@ export function Chatbot() {
             <div className="flex justify-between items-center mb-4">
               <h2
                 className="font-bold text-lg font-fugaz 
-    bg-gradient-to-br from-contrast-main to-contrast-secondary 
+    bg-chocolate
     bg-clip-text text-transparent"
               >
                 {" "}
@@ -348,7 +348,7 @@ export function Chatbot() {
             ? "bg-gradient-to-br from-[#000000] to-[#1DA1F2]"
             : m.social === "whatsapp"
             ? "bg-gradient-to-br from-[#075E54] to-[#25D366]"
-            : "bg-gradient-to-br from-contrast-main to-contrast-secondary"
+            : "bg-naranja"
         }`}
                       >
                         {m.social === "facebook" && (
@@ -394,7 +394,7 @@ export function Chatbot() {
               ? "bg-gradient-to-br from-[#000000] to-[#1DA1F2]"
               : s.social === "whatsapp"
               ? "bg-gradient-to-br from-[#075E54] to-[#25D366]"
-              : "bg-gradient-to-br from-contrast-main to-contrast-secondary"
+              : "bg-naranja"
           } text-white`}
                         >
                           {s.social === "facebook" && (
@@ -448,7 +448,7 @@ export function Chatbot() {
               />
               <button
                 type="submit"
-                className="bg-gradient-to-br from-contrast-main to-contrast-secondary text-white px-4 sm:px-5 py-2 rounded-full text-sm sm:text-base font-semibold hover:bg-main transition-all disabled:opacity-50"
+                className="bg-morado text-white px-4 sm:px-5 py-2 rounded-full text-sm sm:text-base font-semibold hover:bg-chocolate transition-all disabled:opacity-50"
                 disabled={isLoading}
               >
                 {isLoading ? "..." : "Enviar"}

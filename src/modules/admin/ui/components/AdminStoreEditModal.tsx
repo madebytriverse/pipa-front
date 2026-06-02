@@ -237,7 +237,7 @@ export default function AdminStoreEditModal({
         <form onSubmit={handleSubmit} className="flex flex-col gap-6 sm:gap-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
             {/* Columna izquierda */}
-            <div className="bg-gradient-to-br from-main/10 to-contrast-secondary/10 rounded-2xl p-5 sm:p-6 shadow-inner flex flex-col items-center">
+            <div className="bg-beige rounded-2xl p-5 sm:p-6 shadow-inner flex flex-col items-center">
               {/* Logo */}
               <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden shadow-lg mb-3">
                 {formData.image ? (
@@ -384,7 +384,7 @@ export default function AdminStoreEditModal({
               <ButtonComponent
                 text={uploading ? "Guardando..." : "Guardar"}
                 type="submit"
-                style="bg-gradient-to-br from-main via-contrast-secondary to-contrast-main text-white px-4 sm:px-6 py-2 rounded-full font-semibold shadow-md hover:shadow-lg transition text-sm"
+                style="bg-naranja text-white px-4 sm:px-6 py-2 rounded-full font-semibold shadow-md hover:shadow-lg transition text-sm"
               />
             </div>
           </div>

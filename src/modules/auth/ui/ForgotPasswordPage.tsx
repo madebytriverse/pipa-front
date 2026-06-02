@@ -20,7 +20,7 @@ export default function ForgotPasswordPage() {
             <NavBar />
             <section className="flex flex-col lg:flex-row justify-center items-center font-quicksand">
               
-                <div className="hidden lg:flex relative flex-col justify-center bg-gradient-to-br from-contrast-main via-contrast-secondary to-main h-[90vh] w-[35%] gap-4">
+                <div className="hidden lg:flex relative flex-col justify-center bg-chocolate h-[90vh] w-[35%] gap-4">
                     <div
                         className={`bg-white absolute right-0 top-40 z-1 h-30 w-80 rounded-l-full transform transition-all duration-300`}
                     >

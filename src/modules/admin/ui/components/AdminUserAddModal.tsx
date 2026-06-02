@@ -259,7 +259,7 @@ export default function AdminUserAddModal({ onClose, onSave }: AdminUserAddModal
                         <ButtonComponent
                             text="Guardar usuario"
                             onClick={handleSubmit}
-                            style="bg-gradient-to-br from-main via-contrast-secondary to-contrast-main text-white px-6 py-2 rounded-full font-semibold shadow-md hover:shadow-lg transition text-sm"
+                            style="bg-naranja text-white px-6 py-2 rounded-full font-semibold shadow-md hover:shadow-lg transition text-sm"
                         />
                     </div>
                 </div>

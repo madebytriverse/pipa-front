@@ -52,7 +52,7 @@ export default function ResetPasswordPage() {
       <NavBar />
       <section className="flex flex-col lg:flex-row justify-center items-center font-quicksand">
         {/* Columna izquierda (solo visible en desktop) */}
-        <div className="hidden lg:flex relative flex-col justify-center bg-gradient-to-br from-contrast-main via-contrast-secondary to-main h-[100vh] w-[35%] gap-4">
+        <div className="hidden lg:flex relative flex-col justify-center bg-chocolate h-[100vh] w-[35%] gap-4">
           <div className="bg-white absolute right-0 top-40 z-1 h-30 w-75 rounded-l-full transform transition-all duration-300">
             <div className="-rotate-90 absolute w-10 h-10 -top-6 -right-4 bg-transparent flex items-center justify-center rounded-2xl">
               <div className="absolute w-full h-full border-l-[1rem] border-b-[1rem] border-white rounded-bl-[6rem]"></div>

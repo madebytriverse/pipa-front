@@ -150,16 +150,16 @@ export default function ReportProblemPage() {
 
     if (loading) {
         return (
-            <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-light-gray to-white text-main font-quicksand">
+            <div className="flex flex-col items-center justify-center min-h-screen bg-crema text-main font-quicksand">
                 <p className="text-lg animate-pulse">Cargando...</p>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen flex flex-col bg-gradient-to-b from-light-gray to-white font-quicksand">
+        <div className="min-h-screen flex flex-col bg-crema font-quicksand">
             <NavBar />
-            <section className="text-center py-16 sm:py-20 bg-gradient-to-br from-contrast-main via-contrast-secondary to-main text-white">
+            <section className="text-center py-16 sm:py-20 bg-chocolate text-white">
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

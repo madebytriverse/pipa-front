@@ -112,7 +112,7 @@ export default function ProductCard(props: ProductCardProps) {
       {/* Cart Button */}
       {props.edit === "NONE" && (
         <button onClick={handleAddToCart}
-          className="sm:hidden absolute top-3 right-3 bg-gradient-to-br from-contrast-main to-contrast-secondary text-white p-2 rounded-xl hover:bg-gradient-to-br transition-all duration-300" >
+          className="sm:hidden absolute top-3 right-3 bg-naranja text-white p-2 rounded-xl hover:bg-chocolate transition-all duration-300" >
           <IconShoppingBag size={20} className="stroke-[2.5]" />
         </button>
       )}

@@ -143,11 +143,11 @@ export default function HelpPage() {
   }));
 
   return (
-    <div className="min-h-screen flex flex-col font-quicksand bg-gradient-to-b from-[#fafafa] to-white">
+    <div className="min-h-screen flex flex-col font-quicksand bg-crema">
       <NavBar />
 
       {/* Hero */}
-      <section className="text-center py-24 bg-gradient-to-br from-contrast-main via-contrast-secondary to-main text-white shadow-inner">
+      <section className="text-center py-24 bg-chocolate text-white shadow-inner">
         <h1 className="text-4xl md:text-5xl font-bold mb-3 drop-shadow-md">
           Centro de Ayuda
         </h1>

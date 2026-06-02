@@ -17,7 +17,7 @@ export default function AboutUs() {
       <NavBar />
 
       {/* Hero Section */}
-      <section className="relative text-center py-20 sm:py-28 bg-gradient-to-br from-contrast-main via-contrast-secondary to-main text-white font-quicksand overflow-hidden">
+      <section className="relative text-center py-20 sm:py-28 bg-chocolate text-white font-quicksand overflow-hidden">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -105,7 +105,7 @@ export default function AboutUs() {
           Nuestro Equipo
         </motion.h2>
 
-        <div className="my-4 sm:my-5 w-28 sm:w-40 h-1 mx-auto rounded-full bg-gradient-to-r from-main via-contrast-secondary to-contrast-main"></div>
+        <div className="my-4 sm:my-5 w-28 sm:w-40 h-1 mx-auto rounded-full bg-gris-calido"></div>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -127,14 +127,14 @@ export default function AboutUs() {
               transition={{ delay: i * 0.1 }}
               className={`relative flex flex-col items-center justify-end w-56 h-[28rem] rounded-[3rem] overflow-hidden shadow-lg text-center group transition-all duration-500 hover:scale-[1.03]
                 ${i === 0
-                  ? "bg-gradient-to-r from-main to-contrast-secondary"
+                  ? "bg-naranja"
                   : i === 1
-                    ? "bg-gradient-to-r from-contrast-secondary to-contrast-main"
+                    ? "bg-chocolate"
                     : i === 2
-                      ? "bg-contrast-main"
+                      ? "bg-naranja"
                       : i === 3
-                        ? "bg-gradient-to-l from-contrast-secondary to-contrast-main"
-                        : "bg-gradient-to-l from-main to-contrast-secondary"
+                        ? "bg-gris-calido"
+                        : "bg-chocolate"
                 }`}
             >
               <img

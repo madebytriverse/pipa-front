@@ -45,7 +45,7 @@ export default function BeSellerPage() {
 
         {/* 🟣 Requisitos */}
         <section className="w-full py-20 px-6 bg-gray-50 rounded-3xl shadow-inner relative overflow-hidden my-10">
-          <div className="absolute top-0 left-0 w-full h-[6px] bg-gradient-to-r from-main via-contrast-secondary to-contrast-main"></div>
+          <div className="absolute top-0 left-0 w-full h-[6px] bg-gris-calido"></div>
           <div className="max-w-7xl mx-auto text-center relative z-10">
             <h2 className="text-4xl font-bold text-purple-main mb-6">
               Requisitos para vender en TukiShop
@@ -192,7 +192,7 @@ export default function BeSellerPage() {
 
         {/* 🟣 Beneficios */}
         <section className="w-full py-20 bg-gray-50 rounded-3xl relative overflow-hidden my-10">
-          <div className="absolute top-0 left-0 w-full h-[6px] bg-gradient-to-r from-main via-contrast-secondary to-contrast-main"></div>
+          <div className="absolute top-0 left-0 w-full h-[6px] bg-gris-calido"></div>
           <div className="max-w-6xl mx-auto px-6 text-center">
             <h2 className="text-4xl font-bold text-purple-main mb-6">
               Beneficios de vender con nosotros
@@ -238,7 +238,7 @@ export default function BeSellerPage() {
         </section>
 
         {/* 🟣 CTA final */}
-        <section className="py-20 bg-gradient-to-br from-main via-contrast-secondary to-contrast-main text-white text-center w-full rounded-3xl shadow-lg relative overflow-hidden my-10">
+        <section className="py-20 bg-chocolate text-white text-center w-full rounded-3xl shadow-lg relative overflow-hidden my-10">
           <div className="max-w-4xl mx-auto px-6">
             <h2 className="text-4xl sm:text-5xl font-bold mb-6 drop-shadow-lg">
               ¿Listo para empezar?

@@ -635,7 +635,7 @@ export default function SellerProfileComponent() {
         </div>
       </form>
 
-      <div className="bg-gradient-to-r from-main via-contrast-secondary to-contrast-main h-1 rounded-full "></div>
+      <div className="bg-gris-calido h-1 rounded-full"></div>
       {editableStore.is_verified === false ? (
         <div className="flex flex-col gap-6 justify-center items-center bg-white rounded-2xl py-10 px-4 sm:px-12 mx-4 shadow-lg border border-main/20 text-center">
           <h2 className="text-2xl font-semibold font-quicksand text-main mb-6">Información de usuario</h2>

@@ -9,20 +9,16 @@ import {
   IconMenu2,
   IconX,
 } from "@tabler/icons-react";
-import logo from "../../img/TukiLogo.png";
+import logo from "../../img/logopipa.png";
 import ButtonComponent from "../ui/ButtonComponent";
 import { useAuth } from "../../hooks/context/AuthContext";
-import { useProducts } from "../../modules/store/infrastructure/useProducts";
 import { useWishlist } from "../../modules/users/infrastructure/useWishList";
 import NotificationDropdown from "../data-display/NotificationDropDown";
 import { useEffect, useState, useRef } from "react";
-import CategoryDropdown from "../data-display/CategoryDropdown";
 import axios from "axios";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../../hooks/context/CartContext";
-
-type Category = { id: number; name: string };
 
 export default function NavBar() {
   const { user, logout } = useAuth();
@@ -34,17 +30,15 @@ export default function NavBar() {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
-  const { getCategories } = useProducts();
   const navigate = useNavigate();
   const location = useLocation();
-// 🔁 Mantiene el texto del buscador sincronizado con el parámetro ?q=
-useEffect(() => {
-  const params = new URLSearchParams(location.search);
-  const q = params.get("q") || "";
-  setSearchQuery(q);
-}, [location.search]);
 
-  const [categories, setCategories] = useState<Category[]>([]);
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const q = params.get("q") || "";
+    setSearchQuery(q);
+  }, [location.search]);
+
   const [searchQuery, setSearchQuery] = useState("");
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -95,18 +89,6 @@ useEffect(() => {
   }, [user]);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const data = await getCategories();
-        setCategories(data);
-      } catch (err) {
-        console.error("Error al cargar categorías", err);
-      }
-    };
-    fetchCategories();
-  }, []);
-
-  useEffect(() => {
     const handleCartUpdate = () => refreshCart();
     window.addEventListener("cartUpdated", handleCartUpdate);
     return () => window.removeEventListener("cartUpdated", handleCartUpdate);
@@ -141,7 +123,7 @@ useEffect(() => {
   const navLinkClass = (isActive: boolean) =>
     `transition-all duration-200 cursor-pointer relative ${
       isActive
-        ? "font-semibold before:content-[''] before:absolute before:bottom-0 before:left-0 before:w-full before:h-[2px] before:bg-white"
+        ? "font-semibold before:content-[''] before:absolute before:bottom-0 before:left-0 before:w-full before:h-[2px] before:bg-naranja"
         : ""
     } hover:translate-y-[-2px] `;
 
@@ -149,19 +131,18 @@ useEffect(() => {
     `${isActive ? "font-semibold text-main-dark" : "text-main-dark"}`;
 
   return (
-    <nav className="bg-main px-4 sm:px-30 pt-4 pb-4 sm:pb-0 font-quicksand relative z-50">
+    <nav className="bg-beige border-b border-gris-calido/40 px-4 sm:px-30 pt-4 pb-4 sm:pb-0 font-quicksand relative z-50">
       {/* Barra superior */}
       <div className="flex w-full justify-between items-center">
         {/* Logo */}
         <Link
           to="/"
-          className="text-white font-fugaz w-1/3 text-2xl flex items-center gap-2 p-1"
+          className="w-1/3 flex items-center p-1"
         >
-          <img src={logo} alt="Logo" className="h-9 w-auto" />
-          <span className="sm:block text-3xl">TukiShop</span>
+          <img src={logo} alt="Pipa" className="h-10 w-auto" />
         </Link>
 
-        <div className="hidden md:flex items-center bg-white rounded-full px-0.5 w-1/3 relative">
+        <div className="hidden md:flex items-center bg-white border border-taupe/60 rounded-full px-0.5 w-1/3 relative">
   {/* Campo de búsqueda con sugerencias */}
   <input
     type="text"
@@ -177,7 +158,7 @@ useEffect(() => {
   {/* 🔍 Botón de búsqueda */}
   <div className="absolute right-1 top-1/2 -translate-y-1/2">
     <ButtonComponent
-      style="bg-gradient-to-br cursor-pointer from-contrast-main to-contrast-secondary rounded-full w-10 h-9 flex items-center justify-center"
+      style="bg-naranja cursor-pointer rounded-full w-10 h-9 flex items-center justify-center hover:bg-chocolate transition-colors"
       icon={<IconSearch className="text-white h-5 w-5 stroke-3" />}
       onClick={handleSearch}
     />
@@ -209,7 +190,7 @@ useEffect(() => {
 
 
         {/* Íconos desktop */}
-        <div className="hidden md:flex text-white items-center w-1/3 justify-end">
+        <div className="hidden md:flex text-carbon items-center w-1/3 justify-end">
           {/* Usuario */}
           <div className="relative user-dropdown">
             {user ? (
@@ -222,10 +203,10 @@ useEffect(() => {
                   <img
                     src={user.image}
                     alt="Perfil"
-                    className="w-8 h-8 rounded-full object-contain border border-white/20 shadow-sm"
+                    className="w-8 h-8 rounded-full object-contain border border-taupe shadow-sm"
                   />
                 ) : (
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-contrast-main to-contrast-secondary flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full bg-chocolate flex items-center justify-center">
                     <p className="uppercase text-white font-semibold relative -top-0.25">
                       {user.username[0]}
                     </p>
@@ -324,7 +305,7 @@ useEffect(() => {
         </div>
 
         {/* Íconos móviles y botón menú */}
-        <div className="flex md:hidden items-center gap-3 text-white">
+        <div className="flex md:hidden items-center gap-3 text-carbon">
           {user && <NotificationDropdown />} {/* Notificaciones móviles */}
           {/* Lista de deseos */}
           <Link to="/wishlist" className="relative">
@@ -347,10 +328,7 @@ useEffect(() => {
       </div>
 
       <div className="hidden md:block">
-        <ul className="flex justify-center gap-10 p-4 text-white text-sm">
-          <li>
-            <CategoryDropdown categories={categories} navigate={navigate} />
-          </li>
+        <ul className="flex justify-center gap-10 p-4 text-gris-oscuro text-sm">
           <li
             onClick={() => navigate("/")}
             className={navLinkClass(isActiveLink("/"))}
@@ -368,26 +346,6 @@ useEffect(() => {
             className={navLinkClass(isActiveLink("/search", "mode=offers"))}
           >
             Ofertas
-          </li>
-          <li
-            onClick={() => navigate("/search?mode=best-sellers")}
-            className={navLinkClass(
-              isActiveLink("/search", "mode=best-sellers")
-            )}
-          >
-            Lo más vendido
-          </li>
-          <li
-            onClick={() => navigate("/search/stores")}
-            className={navLinkClass(isActiveLink("/search/stores"))}
-          >
-            Tiendas
-          </li>
-          <li
-            onClick={() => navigate("/beSellerPage")}
-            className={navLinkClass(isActiveLink("/beSellerPage"))}
-          >
-            Vender
           </li>
           <li
             onClick={() => navigate("/about")}
@@ -425,10 +383,6 @@ useEffect(() => {
 
             {/* Enlaces */}
             <div className="flex flex-col gap-2 text-sm">
-              {/* Categorías */}
-              <div className="pt-2 border-t-2">
-                <CategoryDropdown categories={categories} navigate={navigate} />
-              </div>
               <Link
                 to="/"
                 onClick={() => setMenuOpen(false)}
@@ -453,29 +407,6 @@ useEffect(() => {
                 )}
               >
                 Ofertas
-              </Link>
-              <Link
-                to="/search?mode=best-sellers"
-                onClick={() => setMenuOpen(false)}
-                className={mobileLinkClass(
-                  isActiveLink("/search", "mode=best-sellers")
-                )}
-              >
-                Lo más vendido
-              </Link>
-              <Link
-                to="/search/stores"
-                onClick={() => setMenuOpen(false)}
-                className={mobileLinkClass(isActiveLink("/search/stores"))}
-              >
-                Tiendas
-              </Link>
-              <Link
-                to="/beSellerPage"
-                onClick={() => setMenuOpen(false)}
-                className={mobileLinkClass(isActiveLink("/beSellerPage"))}
-              >
-                Vender
               </Link>
               <Link
                 to="/about"

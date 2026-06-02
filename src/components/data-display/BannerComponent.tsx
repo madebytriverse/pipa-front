@@ -28,7 +28,7 @@ export default function BannerComponent(props: BannerComponentProps) {
       case "NARANJA":
         return "bg-contrast-secondary";
       case "GRADIENTE":
-        return "bg-gradient-to-br from-contrast-main via-contrast-secondary to-main";
+        return "bg-naranja";
       default:
         return "bg-main";
     }

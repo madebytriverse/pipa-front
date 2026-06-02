@@ -107,8 +107,8 @@ export default function HeartButton({
             ? "text-contrast-secondary hover:text-main"
             : `w-9 h-9 rounded-xl shadow-md transition-all duration-300 ${
                 liked
-                  ? "bg-gradient-to-br from-[#ff5f6d] to-[#ffc371] text-white"
-                  : "bg-gradient-to-br from-contrast-secondary to-contrast-main text-white hover:scale-110"
+                  ? "bg-naranja text-white"
+                  : "bg-gris-calido text-white hover:scale-110"
               }`
         }`}
       >

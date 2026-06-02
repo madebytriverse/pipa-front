@@ -4,12 +4,12 @@ import {
   IconBrandTiktok,
   IconBrandX,
 } from "@tabler/icons-react";
-import logo from "../../img/TukiLogo.png";
+import logo from "../../img/logopipa.png";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="h-auto py-10 bg-main text-white flex flex-col items-center font-quicksand px-6 sm:px-10 space-y-10">
+    <footer className="h-auto py-10 bg-beige text-carbon flex flex-col items-center font-quicksand px-6 sm:px-10 space-y-10">
       {/* Contenedor principal */}
       <div className="flex flex-col sm:flex-row w-full sm:w-[90%] justify-between items-center sm:items-start gap-15 sm:gap-0">
         {/*Columna izquierda: enlaces + redes */}
@@ -19,18 +19,15 @@ export default function Footer() {
           >
             <ul className="space-y-3 min-w-[7rem]">
               <li><a href="/search?mode=offers">Ofertas</a></li>
-              <li><a href="/search/stores">Tiendas</a></li>
               <li><a href="/search?mode=explore">Explorar</a></li>
             </ul>
 
             <ul className="space-y-3 min-w-[8rem]">
               <li><a href="/about">Conócenos</a></li>
-              <li><a href="/beSellerPage">Vender</a></li>
               <li><a href="/help">Ayuda</a></li>
             </ul>
 
             <ul className="space-y-3 min-w-[9rem]">
-              <li><a href="/search?mode=best-sellers">Lo más vendido</a></li>
               <li><a href="/reportProblem">Reportar un problema</a></li>
             </ul>
           </div>
@@ -77,24 +74,21 @@ export default function Footer() {
 
         {/* 🔹 Columna central: logo */}
         <div className="flex flex-col items-center gap-2 w-full sm:w-[33%] order-1 sm:order-2">
-          <Link to="/" className="flex flex-col justify-center items-center">
-          <img src={logo} alt="TukiShop" className="h-15 w-15" />
-          <p className="text-3xl font-fugaz">
-            TukiShop
-          </p>
+          <Link to="/" className="flex justify-center items-center">
+            <img src={logo} alt="Pipa" className="h-16 w-auto" />
           </Link>
         </div>
 
         {/* 🔹 Columna derecha: llamada a la acción */}
         <div className="flex flex-col gap-8 text-center w-full sm:w-[33%] items-center pt-4 sm:pt-8 order-3 sm:order-3">
           <p className="font-semibold text-xl">¿Tienes dudas o consultas?</p>
-          <p className="text-sm text-white/80 max-w-[25rem]">
+          <p className="text-sm text-gris-oscuro max-w-[25rem]">
             Estamos aquí para ayudarte. Si necesitas asistencia o deseas
             comunicarte con nuestro equipo, visita nuestra página de contacto.
           </p>
           <a
             href="/contact"
-            className="bg-contrast-secondary hover:bg-contrast-main hover:scale-105 text-white font-semibold py-2 px-6 rounded-full transition-all duration-300"
+            className="bg-naranja hover:bg-chocolate hover:scale-105 text-white font-semibold py-2 px-6 rounded-full transition-all duration-300"
           >
             Contáctanos
           </a>
@@ -103,7 +97,7 @@ export default function Footer() {
 
       {/* Derechos reservados */}
       <p className="text-xs text-center px-4">
-        © 2025 Ecom. Todos los derechos reservados. Todas las marcas son
+        © 2025 Pipa. Todos los derechos reservados. Todas las marcas son
         propiedad de sus respectivos dueños.
       </p>
     </footer>

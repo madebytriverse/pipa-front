@@ -9,17 +9,38 @@
   --font-fugaz: 'Fugaz One', sans-serif;
   --font-poiret: 'Poiret One', sans-serif;
 
-  --color-blue-main: #00B4D8;
-  --color-purple-main: #5B2A86;
-  --color-yellow-main: #FFD43B;
-  --color-white-main: #F8F9FA;
-  --color-gray-main: #2B2B2B;
-  
-  --color-main: #5B2A86;
-  --color-contrast-main: #FFD027;
-  --color-contrast-secondary: #FF6F3B;
+  /* Paleta Pipa — Colores base */
+  --color-beige: #F2E9DD;
+  --color-crema: #FFF8F1;
+
+  /* Paleta Pipa — Colores secundarios */
+  --color-morado: #7B5BA7;
+  --color-rosa: #D98FA3;
+  --color-verde: #A8B68A;
+  --color-azul: #7FA6C8;
+  --color-naranja: #E18A3B;
+  --color-chocolate: #8B5E34;
+
+  /* Paleta Pipa — Neutros */
+  --color-taupe: #DCCFBE;
+  --color-gris-claro: #E6E6E6;
+  --color-gris-calido: #B8B2A6;
+  --color-gris-oscuro: #5A5A5A;
+  --color-carbon: #2B2B2B;
+
+  /* Variables funcionales de la app */
+  --color-main: #7B5BA7;
+  --color-contrast-main: #D98FA3;
+  --color-contrast-secondary: #E18A3B;
   --color-main-dark: #2B2B2B;
-  --color-light-gray: #F8F9F9;
+  --color-light-gray: #FFF8F1;
+
+  /* Aliases heredados */
+  --color-blue-main: #7FA6C8;
+  --color-purple-main: #7B5BA7;
+  --color-yellow-main: #D98FA3;
+  --color-white-main: #FFF8F1;
+  --color-gray-main: #2B2B2B;
 
   --bg-transparent {
     background-color: transparent;
@@ -69,8 +90,8 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --background: #FFF8F1;
+  --foreground: #2B2B2B;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);

@@ -42,7 +42,7 @@ export default function ReviewCard({
         <p className="text-sm text-gray-500">{date}</p>
       </div>
 
-      <div className="w-full h-[2px] bg-gradient-to-r from-main via-contrast-secondary to-contrast-main rounded-full" />
+      <div className="w-full h-[2px] bg-gris-calido rounded-full" />
     </figure>
   );
 }

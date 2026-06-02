@@ -192,7 +192,7 @@ export default function StoreNavBar({
           />
           <button
             type="submit"
-            className="bg-gradient-to-br from-contrast-main to-contrast-secondary rounded-full w-12 h-9 flex items-center justify-center"
+            className="bg-naranja rounded-full w-12 h-9 flex items-center justify-center hover:bg-chocolate transition-colors"
           >
             <IconSearch className="text-white h-5 w-auto" />
           </button>
@@ -242,7 +242,7 @@ export default function StoreNavBar({
             />
             <button
               type="submit"
-              className="bg-gradient-to-br from-contrast-main to-contrast-secondary rounded-full w-11 h-8 flex items-center justify-center"
+              className="bg-naranja rounded-full w-11 h-8 flex items-center justify-center hover:bg-chocolate transition-colors"
             >
               <IconSearch className="text-white h-5 w-5" />
             </button>

@@ -34,7 +34,7 @@ export default function LoginRegisterPage() {
 
             <section className="flex flex-col lg:flex-row flex-grow justify-center items-center font-quicksand">
                 {/* Panel izquierdo (solo visible en desktop) */}
-                <div className="hidden lg:flex justify-end items-center bg-gradient-to-br from-contrast-main via-contrast-secondary to-main h-[90vh] w-[35%] relative">
+                <div className="hidden lg:flex justify-end items-center bg-chocolate h-[90vh] w-[35%] relative">
                     <ul className="flex flex-col items-end pr-10 gap-20 relative">
                         <div
                             className={`bg-white absolute right-0 z-0 h-30 w-55 rounded-l-full transform transition-all duration-300 ${mode === "login" ? "-top-6" : "translate-y-30"

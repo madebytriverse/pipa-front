@@ -76,7 +76,7 @@ export default function SearchedStores() {
     <div key={store.id}>
       <StoreListCard store={store} />
       {index < stores.length - 1 && (
-        <div className="w-full my-10 h-[2px] bg-gradient-to-r from-main via-contrast-secondary to-contrast-main sm:hidden"></div>
+        <div className="w-full my-10 h-[2px] bg-gris-calido sm:hidden"></div>
       )}
     </div>
   ))}

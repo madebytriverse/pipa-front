@@ -64,7 +64,7 @@ export default function RegisterSellerPage() {
       {/* Contenedor principal */}
       <section className="flex flex-col sm:flex-row justify-center items-center min-h-[90vh]">
         {/* 🔹 Lado izquierdo (degradado) */}
-        <div className="relative flex flex-col justify-center bg-gradient-to-br from-contrast-main via-contrast-secondary to-main h-[20vh] sm:h-[90vh] w-full sm:w-[35%] gap-4">
+        <div className="relative flex flex-col justify-center bg-chocolate h-[20vh] sm:h-[90vh] w-full sm:w-[35%] gap-4">
           <div className="bg-white absolute sm:right-0 sm:top-40 sm:h-30 sm:w-65 rounded-l-full transform transition-all duration-300 hidden sm:block">
             <div className="-rotate-90 absolute w-10 h-10 -top-6 -right-4 bg-transparent flex items-center justify-center rounded-2xl">
               <div className="absolute w-full h-full border-l-[1rem] border-b-[1rem] border-white rounded-bl-[6rem]"></div>

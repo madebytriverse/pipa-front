@@ -19,11 +19,11 @@ export default function ContactPage() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col bg-gradient-to-b from-light-gray to-white">
+        <div className="min-h-screen flex flex-col bg-crema">
             <NavBar />
 
             {/* Hero */}
-            <section className="text-center py-16 sm:py-20 bg-gradient-to-br from-contrast-main via-contrast-secondary to-main text-white font-quicksand">
+            <section className="text-center py-16 sm:py-20 bg-chocolate text-white font-quicksand">
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

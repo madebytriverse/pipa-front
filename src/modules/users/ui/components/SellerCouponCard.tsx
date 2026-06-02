@@ -23,7 +23,7 @@ export default function SellerCouponCard({
         coupon.expires_at && new Date(coupon.expires_at) < new Date();
 
     return (
-        <div className="w-full bg-gradient-to-br from-main/10 via-contrast-main/10 to-contrast-secondary/10 border border-main/10 rounded-2xl p-4 sm:p-5 shadow-md flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 font-quicksand transition-all hover:shadow-lg">
+        <div className="w-full bg-beige border border-taupe/30 rounded-2xl p-4 sm:p-5 shadow-md flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 font-quicksand transition-all hover:shadow-lg">
             {/* Izquierda: info */}
             <div className="flex flex-col gap-1 sm:gap-2">
                 <div className="flex items-center gap-2">

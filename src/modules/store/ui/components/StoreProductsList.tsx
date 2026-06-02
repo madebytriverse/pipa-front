@@ -115,7 +115,7 @@ export default function StoreProductsList() {
                 <ButtonComponent
                   icon={<IconSearch />}
                   iconStyle="text-white cursor-pointer"
-                  style="bg-gradient-to-br to-contrast-main from-contrast-secondary rounded-full w-10 h-8 flex items-center justify-center"
+                  style="bg-naranja rounded-full w-10 h-8 flex items-center justify-center hover:bg-chocolate transition-colors"
                 />
               </div>
 
@@ -123,7 +123,7 @@ export default function StoreProductsList() {
               <Link to="/crudProduct" className="w-full sm:w-auto">
                 <ButtonComponent
                   text="Registrar producto"
-                  style="bg-contrast-secondary cursor-pointer rounded-full px-4 py-2 w-full text-white font-semibold hover:bg-gradient-to-br from-contrast-main via-contrast-secondary to-main transition-all duration-400"
+                  style="bg-naranja cursor-pointer rounded-full px-4 py-2 w-full text-white font-semibold hover:bg-chocolate transition-all duration-300"
                 />
               </Link>
             </div>

@@ -273,7 +273,7 @@ export default function CustomerProfileComponent() {
             className="w-36 h-36 sm:w-48 sm:h-48 rounded-full object-cover border-4 border-white shadow"
           />
         ) : (
-          <div className="w-36 h-36 sm:w-48 sm:h-48 rounded-full bg-gradient-to-br from-contrast-main to-contrast-secondary flex items-center justify-center border-4 border-white shadow">
+          <div className="w-36 h-36 sm:w-48 sm:h-48 rounded-full bg-chocolate flex items-center justify-center border-4 border-white shadow">
             <p className="uppercase text-white font-bold text-5xl relative top-[-2px]">
               {user?.username?.[0] || "?"}
             </p>

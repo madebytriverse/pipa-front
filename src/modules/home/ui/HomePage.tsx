@@ -18,7 +18,6 @@ import BannerComponent from "../../../components/data-display/BannerComponent";
 import { useBanner } from "../../admin/infrastructure/useBanner";
 import BannerSelectModal from "./BannerSelectModal";
 import { useAuth } from "../../../hooks/context/AuthContext";
-import Snowfall from "react-snowfall";
 type AnyBanner = {
   id?: number;
   title?: string;
@@ -175,7 +174,6 @@ export default function HomePage() {
 
   return (
     <div>
-      <Snowfall color="#82c3d9" />
       <NavBar />
       <div className="mx-auto max-w-[80rem]">
         {/* 🔹 HEADER PRINCIPAL */}
@@ -208,19 +206,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 🔹 CATEGORÍAS */}
-        <section className="mx-5 sm:mx-10 sm:my-10">
-          <h2 className="text-xl sm:text-2xl font-semibold font-quicksand">
-            Categorías
-          </h2>
-          {loadingCategories && <SkeletonCategory count={4} />}
-          <div
-            className={`${loadingCategories ? "opacity-0" : "opacity-100"
-              } transition-opacity duration-500`}
-          >
-            <CategorySlider onLoaded={() => setLoadingCategories(false)} />
-          </div>
-        </section>
+        {/* Categorías ocultas — tienda única */}
 
         {/* 🔹 OFERTAS */}
         <section className="mx-4 sm:mx-10 my-6 sm:my-10">

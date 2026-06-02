@@ -132,7 +132,7 @@ export default function AdminStoreProductListModal({
                         <ButtonComponent
                             icon={<IconSearch size={18} />}
                             iconStyle="text-white cursor-pointer"
-                            style="bg-gradient-to-br to-contrast-main from-contrast-secondary rounded-full w-12 h-8 flex items-center justify-center"
+                            style="bg-naranja rounded-full w-12 h-8 flex items-center justify-center"
                         />
                     </div>
                 </div>
