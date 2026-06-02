@@ -66,14 +66,14 @@ export default function ProductCard(props: ProductCardProps) {
   };
 
   return (
-    <figure className="relative flex flex-col w-44 sm:w-55 h-70 sm:h-90 p-3 bg-light-gray rounded-2xl shadow-md font-quicksand group transition-all duration-300">
+    <figure className="relative flex flex-col w-44 sm:w-55 h-70 sm:h-90 p-3 bg-beige rounded-2xl shadow-md font-quicksand group transition-all duration-300">
       {/* Edit Button */}
       {props.edit === "EDIT" && (
         <>
           {props.onEditClick ? (
             <button
               onClick={() => props.onEditClick?.(props.id)}
-              className="absolute top-3 right-3 w-8 h-8 sm:w-9 sm:h-9 bg-contrast-main rounded-xl flex items-center justify-center hover:bg-contrast-secondary hover:text-white transition-all duration-400"
+              className="absolute top-3 right-3 w-8 h-8 sm:w-9 sm:h-9 bg-chocolate text-white rounded-xl flex items-center justify-center hover:bg-naranja transition-all duration-300"
             >
               <IconEdit />
             </button>
@@ -83,7 +83,7 @@ export default function ProductCard(props: ProductCardProps) {
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             >
               <ButtonComponent
-                style="absolute top-3 right-3 w-8 h-8 sm:w-9 sm:h-9 bg-contrast-main rounded-xl flex items-center justify-center hover:bg-contrast-secondary hover:text-white transition-all duration-400"
+                style="absolute top-3 right-3 w-8 h-8 sm:w-9 sm:h-9 bg-chocolate text-white rounded-xl flex items-center justify-center hover:bg-naranja transition-all duration-300"
                 icon={<IconEdit />}
               />
             </Link>
@@ -112,7 +112,7 @@ export default function ProductCard(props: ProductCardProps) {
       {/* Cart Button */}
       {props.edit === "NONE" && (
         <button onClick={handleAddToCart}
-          className="sm:hidden absolute top-3 right-3 bg-naranja text-white p-2 rounded-xl hover:bg-chocolate transition-all duration-300" >
+          className="sm:hidden absolute top-3 right-3 bg-chocolate text-white p-2 rounded-xl hover:bg-naranja transition-all duration-300" >
           <IconShoppingBag size={20} className="stroke-[2.5]" />
         </button>
       )}
@@ -194,14 +194,8 @@ export default function ProductCard(props: ProductCardProps) {
 
             {/* Add to Cart Button Hover for Desktop */}
             <div
-              className="hidden sm:flex absolute flex-col h-17 justify-between transform translate-x-23 opacity-0 group-hover:opacity-100 text-white font-semibold p-2 rounded-xl items-center transition-all duration-300 cursor-pointer"
+              className={`hidden sm:flex absolute flex-col h-17 justify-between transform translate-x-23 opacity-0 group-hover:opacity-100 text-white font-semibold p-2 rounded-xl items-center transition-all duration-300 cursor-pointer ${added ? "bg-naranja" : "bg-chocolate"}`}
               onClick={handleAnimatedAdd}
-              style={{
-                background:
-                  added
-                    ? "linear-gradient(90deg, var(--color-contrast-secondary), var(--color-main))"
-                    : "linear-gradient(90deg, var(--color-contrast-main), var(--color-contrast-secondary))",
-              }}
             >
               <div className="relative flex flex-col items-center justify-center w-full h-full">
                 <AnimatePresence mode="wait">

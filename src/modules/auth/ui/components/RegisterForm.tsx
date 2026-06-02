@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IconEye, IconEyeClosed } from "@tabler/icons-react";
-import logo from "../../../../img/TukiLogo.png";
+import logo from "../../../../img/logopipa.png";
 import useRegister from "../../infrastructure/useRegister";
 
 type Props = {
@@ -62,7 +62,6 @@ export default function RegisterForm({ onRegisterSuccess }: Props) {
   return (
     <div className="flex flex-col items-center w-full justify-center">
       <img className="h-20" src={logo} alt="TukiShop" />
-      <p className="font-fugaz text-2xl">TukiShop</p>
 
       <div className="flex flex-col w-full items-center space-y-5 mt-10">
         <form

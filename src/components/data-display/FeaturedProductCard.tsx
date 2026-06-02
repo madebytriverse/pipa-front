@@ -72,7 +72,7 @@ export default function FeaturedProductCard(props: FeaturedProductCardProps) {
 
   return (
     <figure
-      className={`relative w-[95%] max-w-lg h-[15rem] sm:h-full p-4 bg-light-gray rounded-2xl shadow-md overflow-hidden
+      className={`relative w-[95%] max-w-lg h-[15rem] sm:h-full p-4 bg-beige rounded-2xl shadow-md overflow-hidden
       flex flex-col sm:flex-row font-quicksand transition-all duration-300
         }`}
     >
@@ -82,7 +82,7 @@ export default function FeaturedProductCard(props: FeaturedProductCardProps) {
           {props.onEditClick ? (
             <button
               onClick={() => props.onEditClick?.(props.id)}
-              className="absolute top-4 right-4 w-9 h-9 bg-contrast-main rounded-xl flex items-center cursor-pointer justify-center hover:bg-contrast-secondary hover:text-white transition-all duration-400"
+              className="absolute top-4 right-4 w-9 h-9 bg-chocolate text-white rounded-xl flex items-center cursor-pointer justify-center hover:bg-naranja transition-all duration-300"
             >
               <IconEdit />
             </button>
@@ -92,7 +92,7 @@ export default function FeaturedProductCard(props: FeaturedProductCardProps) {
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             >
               <ButtonComponent
-                style="absolute top-4 right-4 w-9 h-9 bg-contrast-main rounded-xl flex items-center cursor-pointer justify-center hover:bg-contrast-secondary hover:text-white transition-all duration-400"
+                style="absolute top-4 right-4 w-9 h-9 bg-chocolate text-white rounded-xl flex items-center cursor-pointer justify-center hover:bg-naranja transition-all duration-300"
                 icon={<IconEdit />}
               />
             </Link>
@@ -181,26 +181,9 @@ export default function FeaturedProductCard(props: FeaturedProductCardProps) {
                 initial={false}
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
-                animate={
-                  added
-                    ? {
-                      background:
-                        "linear-gradient(90deg, var(--color-contrast-secondary), var(--color-main))",
-                      scale: [1, 1.05, 1],
-                      boxShadow: "0 0 15px rgba(150, 80, 220, 0.6)",
-                    }
-                    : {
-                      background:
-                        "linear-gradient(90deg, var(--color-contrast-main), var(--color-contrast-secondary))",
-                      scale: 1,
-                      boxShadow: "0 0 0 rgba(0,0,0,0)",
-                    }
-                }
-                transition={{
-                  duration: 0.1,
-                  ease: "easeInOut",
-                }}
-                className="relative overflow-hidden cursor-pointer rounded-full text-sm sm:text-base transition-all duration-400 py-2 px-6 shadow-md w-full text-white"
+                animate={added ? { scale: [1, 1.05, 1] } : { scale: 1 }}
+                transition={{ duration: 0.15, ease: "easeInOut" }}
+                className={`relative overflow-hidden cursor-pointer rounded-full text-sm sm:text-base transition-colors duration-300 py-2 px-6 shadow-md w-full text-white ${added ? "bg-naranja" : "bg-chocolate"}`}
               >
                 {/* Contenedor del texto animado */}
                 <div className="relative h-5 sm:h-6 flex items-center justify-center">

@@ -25,11 +25,11 @@ export default function AboutUs() {
           className="relative z-10 px-4"
         >
           <h1 className="text-3xl sm:text-5xl font-bold mb-4 sm:mb-6 leading-tight">
-            Conoce a <span className="font-fugaz">TukiShop</span>
+            Conoce a <span className="font-fugaz">Pipa</span>
           </h1>
           <p className="max-w-2xl mx-auto text-base sm:text-lg text-white/90 leading-relaxed mb-8">
             Creemos que cada tienda local y cada emprendedor tiene una historia que contar.
-            En <span className="font-semibold text-white">TukiShop</span> unimos tecnología, diseño y pasión
+            En <span className="font-semibold text-white">Pipa</span> unimos tecnología, diseño y pasión
             para transformar esas historias en experiencias digitales memorables.
           </p>
           <motion.div

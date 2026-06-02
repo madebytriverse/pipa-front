@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IconEye, IconEyeClosed } from "@tabler/icons-react";
-import logo from "../../../../img/TukiLogo.png";
+import logo from "../../../../img/logopipa.png";
 import { useAuth } from "../../../../hooks/context/AuthContext";
 import ButtonComponent from "../../../../components/ui/ButtonComponent";
 
@@ -47,7 +47,6 @@ export default function LoginForm() {
   return (
     <div className="flex flex-col items-center w-full justify-center">
       <img className="h-20" src={logo} alt="Logo TukiShop" />
-      <p className="font-fugaz text-2xl">TukiShop</p>
 
       <div className="flex flex-col w-full items-center space-y-5 mt-10">
         <form

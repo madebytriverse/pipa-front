@@ -77,7 +77,7 @@ export default function ContactPage() {
                             name="subject"
                             value={fields.subject}
                             onChange={handleChange}
-                            placeholder="Ej. Colaboración con TukiShop"
+                            placeholder="Ej. Colaboración con Pipa"
                             className="rounded-xl p-2 border border-main/30 bg-transparent text-gray-800"
                             required
                         />

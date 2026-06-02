@@ -1,7 +1,7 @@
 import Footer from "../../../components/layout/Footer";
 import NavBar from "../../../components/layout/NavBar";
 import { useNavigate } from "react-router-dom";
-import logo from "../../../img/TukiLogo.png";
+import logo from "../../../img/logopipa.png";
 import React, { useState } from "react";
 import { useAuth } from "../infrastructure/useAuth";
 
@@ -41,8 +41,7 @@ export default function ForgotPasswordPage() {
                
                 <div className="flex flex-col items-center justify-center w-full h-[80vh] lg:w-[65%] px-6 sm:px-10 py-10 bg-white">
                     <div className="flex flex-col items-center w-full justify-center">
-                        <img className="h-20" src={logo} alt="TukiShop" />
-                        <p className="font-fugaz text-2xl mt-2">TukiShop</p>
+                        <img className="h-20" src={logo} alt="Pipa" />
 
                         <div className="flex flex-col w-full items-center space-y-5 mt-10">
                            
