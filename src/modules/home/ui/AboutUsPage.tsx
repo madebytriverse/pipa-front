@@ -7,8 +7,6 @@ export default function AboutUs() {
   const teamMember = [
     { name: "Raul", role: "Designer & Full-Stack Developer", image: "https://res.cloudinary.com/dpbghs8ep/image/upload/v1762578745/RaulRecortefoto_hgcjlb.png" },
     { name: "John", role: "Full-Stack Developer", image: "https://res.cloudinary.com/dpbghs8ep/image/upload/v1762579265/johnfoto_qwa4xc.png" },
-    { name: "Kristen", role: "Designer & Front-End Developer", image: "https://res.cloudinary.com/dpbghs8ep/image/upload/v1762569159/kris2Kfoto_pdzhwo.png" },
-    { name: "Andres", role: "Full-Stack Developer", image: "https://res.cloudinary.com/dpbghs8ep/image/upload/v1762578753/andresfoto-removebg-preview_aav7ni.png" },
     { name: "Alejandro", role: "Quality Assurance", image: "https://res.cloudinary.com/dpbghs8ep/image/upload/v1762560451/AlejandroFoto_pqtukx.png" },
   ];
 

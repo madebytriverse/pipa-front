@@ -6,13 +6,21 @@ export async function uploadImage(file: File): Promise<string> {
   const formData = new FormData();
   formData.append("image", file);
 
-  const { data } = await axios.post("/upload-image", formData, {
-    headers: {
-      Authorization: `Bearer ${token ?? ""}`,
-      // OJO: NO pongas 'Content-Type' manual; el navegador arma el boundary.
-    },
-  });
-
-  // El backend responde: { url: 'https://...' }
-  return data.url as string;
+  try {
+    const { data } = await axios.post("/upload-image", formData, {
+      headers: {
+        Authorization: `Bearer ${token ?? ""}`,
+        // OJO: NO pongas 'Content-Type' manual; el navegador arma el boundary.
+      },
+    });
+    return data.url as string;
+  } catch (err: any) {
+    const serverMsg =
+      err?.response?.data?.message ??
+      err?.response?.data?.errors?.image?.[0] ??
+      err?.message ??
+      "Error desconocido al subir imagen";
+    console.error("❌ uploadImage falló:", serverMsg, err?.response?.data);
+    throw new Error(serverMsg);
+  }
 }

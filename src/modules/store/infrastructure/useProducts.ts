@@ -204,7 +204,10 @@ const searchProducts = async (query: string): Promise<Product[]> => {
       };
       console.log("📦 Payload final (antes de POST):", JSON.stringify(payload, null, 2));
 
-      await axios.post(`${BASE_URL}/products`, payload);
+      const token = localStorage.getItem("access_token");
+      await axios.post(`${BASE_URL}/products`, payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setSuccess("¡Producto creado con éxito!");
     } catch (e: any) {
       setError("Error al crear el producto: " + (e.response?.data?.message || e.message));
