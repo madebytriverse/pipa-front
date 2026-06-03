@@ -4,38 +4,19 @@ import axios from "axios";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
-// 🛍️ Tipos de datos
-interface Product {
+export interface PipaProduct {
   id: number;
   name: string;
   price: number;
-  discount_price?: number;
+  discount_price?: number | null;
   image_1_url: string;
-  store_name: string;
-}
-
-interface Store {
-  id: number;
-  name: string;
-  image?: string;
-  banner?: string;
-  rating?: number;
-  category_name?: string;
+  reason: string;
 }
 
 export interface Message {
   role: "user" | "bot";
   content: string;
-  products?: Product[];
-  stores?: Store[];
-  link?: string;
-  navigate?: boolean;
-  social?: "facebook" | "instagram" | "tiktok" | "x" | "whatsapp";
-  socials?: {
-    social: "facebook" | "instagram" | "tiktok" | "x" | "whatsapp";
-    link: string;
-  }[];
-  showButton?: boolean;
+  products?: PipaProduct[];
 }
 
 interface ChatbotContextType {
@@ -50,7 +31,6 @@ interface ChatbotContextType {
   visible: boolean;
 }
 
-// 🎯 Contexto
 const ChatbotContext = createContext<ChatbotContextType | undefined>(undefined);
 
 export function ChatbotProvider({ children }: { children: ReactNode }) {
@@ -61,12 +41,10 @@ export function ChatbotProvider({ children }: { children: ReactNode }) {
   const [visible, setVisible] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // 🔹 Auto-scroll al final
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, streamingMessage]);
 
-  // 🚀 Enviar mensaje al backend
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
@@ -80,83 +58,50 @@ export function ChatbotProvider({ children }: { children: ReactNode }) {
       const res = await axios.post("/chatbot", { message: userMessage });
       const data = res.data;
       const botReply = data.message || "No tengo respuesta en este momento.";
+      const products: PipaProduct[] = data.products ?? [];
 
-      gradualDisplay(
-        botReply,
-        data.results,
-        data.link,
-        data.stores,
-        data.navigate,
-        data.social,
-        data.socials,
-        data.showButton
-      );
-    } catch (err) {
-      console.error("❌ Error en chatbot:", err);
+      gradualDisplay(botReply, products);
+    } catch (err: any) {
+      const serverMsg =
+        err?.response?.data?.message ?? err?.message ?? "Error desconocido";
+      console.error("❌ Pipo error:", serverMsg);
       setMessages((prev) => [
         ...prev,
-        { role: "bot", content: "Hubo un error al procesar tu mensaje." },
+        { role: "bot", content: "Tuve un problema técnico 🙈 Intentá de nuevo en un momento." },
       ]);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // 💬 Mostrar texto del bot con efecto gradual + adjuntar resultados
-  const gradualDisplay = (
-    text: string,
-    products?: Product[],
-    link?: string,
-    stores?: Store[],
-    navigate?: boolean,
-    social?: "facebook" | "instagram" | "tiktok" | "x",
-    socials?: {
-      social: "facebook" | "instagram" | "tiktok" | "x";
-      link: string;
-    }[],
-    showButton?: boolean // ✅
-  ) => {
+  const gradualDisplay = (text: string, products: PipaProduct[]) => {
     let index = 0;
     setStreamingMessage("");
     const words = text.split(" ");
+
     const interval = setInterval(() => {
       if (index < words.length) {
-        setStreamingMessage(
-          (prev) => prev + (index > 0 ? " " : "") + words[index]
-        );
+        setStreamingMessage((prev) => prev + (index > 0 ? " " : "") + words[index]);
         index++;
       } else {
         clearInterval(interval);
         setMessages((prev) => [
           ...prev,
-          {
-            role: "bot",
-            content: text,
-            products,
-            stores,
-            link,
-            navigate,
-            social,
-            socials,
-            showButton,
-          },
+          { role: "bot", content: text, products },
         ]);
         setStreamingMessage("");
       }
     }, 50);
   };
 
-  // 🎛️ Alternar visibilidad
   const toggleVisible = () => setVisible((v) => !v);
+
   useEffect(() => {
     const handleAddWelcome = (event: any) => {
-      const message = event.data;
-      setMessages((prev) => [...prev, message]);
+      setMessages((prev) => [...prev, event.data]);
     };
-
     window.addEventListener("addWelcomeMessage", handleAddWelcome);
-    return () =>
-      window.removeEventListener("addWelcomeMessage", handleAddWelcome);
+    return () => window.removeEventListener("addWelcomeMessage", handleAddWelcome);
   }, []);
 
   return (
@@ -178,7 +123,6 @@ export function ChatbotProvider({ children }: { children: ReactNode }) {
   );
 }
 
-// 🧠 Hook para usar el contexto fácilmente
 export const useChatbot = () => {
   const context = useContext(ChatbotContext);
   if (!context)
