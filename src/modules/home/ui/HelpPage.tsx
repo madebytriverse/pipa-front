@@ -143,7 +143,7 @@ export default function HelpPage() {
   }));
 
   return (
-    <div className="min-h-screen flex flex-col font-quicksand bg-crema">
+    <div className="min-h-screen flex flex-col font-quicksand bg-white">
       <NavBar />
 
       {/* Hero */}

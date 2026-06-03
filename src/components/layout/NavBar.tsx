@@ -342,12 +342,6 @@ export default function NavBar() {
             Explorar
           </li>
           <li
-            onClick={() => navigate("/search?mode=offers")}
-            className={navLinkClass(isActiveLink("/search", "mode=offers"))}
-          >
-            Ofertas
-          </li>
-          <li
             onClick={() => navigate("/about")}
             className={navLinkClass(isActiveLink("/about"))}
           >
@@ -398,15 +392,6 @@ export default function NavBar() {
                 )}
               >
                 Explorar
-              </Link>
-              <Link
-                to="/search?mode=offers"
-                onClick={() => setMenuOpen(false)}
-                className={mobileLinkClass(
-                  isActiveLink("/search", "mode=offers")
-                )}
-              >
-                Ofertas
               </Link>
               <Link
                 to="/about"

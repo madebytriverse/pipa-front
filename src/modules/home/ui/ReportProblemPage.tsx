@@ -150,14 +150,14 @@ export default function ReportProblemPage() {
 
     if (loading) {
         return (
-            <div className="flex flex-col items-center justify-center min-h-screen bg-crema text-main font-quicksand">
+            <div className="flex flex-col items-center justify-center min-h-screen bg-white text-main font-quicksand">
                 <p className="text-lg animate-pulse">Cargando...</p>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen flex flex-col bg-crema font-quicksand">
+        <div className="min-h-screen flex flex-col bg-white font-quicksand">
             <NavBar />
             <section className="text-center py-16 sm:py-20 bg-chocolate text-white">
                 <motion.h1

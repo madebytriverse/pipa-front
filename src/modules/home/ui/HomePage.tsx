@@ -10,7 +10,6 @@ import FeaturedProductsSlider from "../../../components/data-display/FeaturedPro
 import { useEffect, useState, useRef } from "react";
 import { useProducts } from "../../store/infrastructure/useProducts";
 import type { Product } from "../../store/infrastructure/useProducts";
-import CategorySlider from "../../../components/data-display/CategorySlider";
 import ProductCard from "../../../components/data-display/ProductCard";
 import { IconChevronRight, IconEdit } from "@tabler/icons-react";
 import Footer from "../../../components/layout/Footer";
@@ -34,7 +33,7 @@ type AnyBanner = {
 };
 
 export default function HomePage() {
-  const { getProducts, getFeaturedProducts, getOffers } = useProducts();
+  const { getProducts, getFeaturedProducts } = useProducts();
   const {
     banners,
     fetchBanners,
@@ -44,13 +43,10 @@ export default function HomePage() {
   } = useBanner();
   const { user } = useAuth(); // ✅ obtener usuario actual
 
-  const [offerProducts, setOfferProducts] = useState<Product[]>([]);
   const [exploreProducts, setExploreProducts] = useState<Product[]>([]);
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
-  const [loadingOffers, setLoadingOffers] = useState(true);
   const [loadingFeatured, setLoadingFeatured] = useState(true);
   const [loadingExplore, setLoadingExplore] = useState(true);
-  const [loadingCategories, setLoadingCategories] = useState(true);
 
   // 🔹 Slots de banners
   const [bannerSlot1, setBannerSlot1] = useState<AnyBanner | null>(null);
@@ -125,19 +121,6 @@ export default function HomePage() {
 
     if (banners.length > 0) loadPageBanners();
   }, [banners]);
-  /** 🔹 Cargar productos en oferta */
-  useEffect(() => {
-    (async () => {
-      try {
-        const prods = await getOffers(); // ✅ llamada al nuevo método global
-        setOfferProducts(prods.slice(0, 10)); // puedes ajustar el límite
-      } catch (error) {
-        console.error("Error al cargar ofertas:", error);
-      } finally {
-        setLoadingOffers(false);
-      }
-    })();
-  }, []);
 
   // 🔹 Abrir modal
   const handleOpenModal = (side: "LEFT" | "RIGHT") => {
@@ -208,73 +191,6 @@ export default function HomePage() {
 
         {/* Categorías ocultas — tienda única */}
 
-        {/* 🔹 OFERTAS */}
-        <section className="mx-4 sm:mx-10 my-6 sm:my-10">
-          <div className="flex justify-between items-center">
-            <h2 className="text-lg sm:text-2xl font-semibold font-quicksand">
-              Ofertas
-            </h2>
-            <div className="flex items-center gap-1 text-sm sm:text-base">
-              <a
-                href="search?mode=offers"
-                className="font-quicksand font-semibold cursor-pointer"
-              >
-                Ver todo
-              </a>
-              <IconChevronRight className="inline w-4 h-4 sm:w-5 sm:h-5" />
-            </div>
-          </div>
-
-          {loadingOffers ? (
-            <SkeletonProduct count={5} />
-          ) : offerProducts.length === 0 ? (
-            <p className="text-center text-gray-500 my-8">
-              No hay productos en oferta actualmente 🛍️
-            </p>
-          ) : (
-            <>
-              {/* 🔹 Vista móvil */}
-              <div className="grid grid-cols-2 gap-4 my-6 sm:hidden">
-                {offerProducts.slice(0, 6).map((prod) => (
-                  <ProductCard
-                    key={prod.id}
-                    id={prod.id!}
-                    shop={prod.store?.name || "No hay tienda"}
-                    title={prod.name}
-                    price={prod.price}
-                    discountPrice={
-                      prod.discount_price && prod.discount_price !== 0
-                        ? prod.discount_price
-                        : undefined
-                    }
-                    img={prod.image_1_url || "https://res.cloudinary.com/dpbghs8ep/image/upload/v1761412207/imagenNoSubida_dymbb7.png"}
-                    edit="NONE"
-                  />
-                ))}
-              </div>
-
-              {/* 🔹 Vista escritorio */}
-              <div className="hidden sm:grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 my-10 gap-5">
-                {offerProducts.slice(0, 10).map((prod) => (
-                  <ProductCard
-                    key={prod.id}
-                    id={prod.id!}
-                    shop={prod.store?.name || "No hay tienda"}
-                    title={prod.name}
-                    price={prod.price}
-                    discountPrice={
-                      prod.discount_price && prod.discount_price !== 0
-                        ? prod.discount_price
-                        : undefined
-                    }
-                    img={prod.image_1_url || "https://res.cloudinary.com/dpbghs8ep/image/upload/v1761412207/imagenNoSubida_dymbb7.png"}
-                    edit="NONE"
-                  />
-                ))}
-              </div>
-            </>
-          )}
-        </section>
 
         {/* 🔹 BANNERS GUARDADOS EN BD */}
         <section className="mx-4 sm:mx-10 sm:my-10 my-6">

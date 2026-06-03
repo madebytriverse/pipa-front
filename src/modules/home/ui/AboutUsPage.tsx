@@ -4,11 +4,6 @@ import NavBar from "../../../components/layout/NavBar";
 import Footer from "../../../components/layout/Footer";
 
 export default function AboutUs() {
-  const teamMember = [
-    { name: "Raul", role: "Designer & Full-Stack Developer", image: "https://res.cloudinary.com/dpbghs8ep/image/upload/v1762578745/RaulRecortefoto_hgcjlb.png" },
-    { name: "John", role: "Full-Stack Developer", image: "https://res.cloudinary.com/dpbghs8ep/image/upload/v1762579265/johnfoto_qwa4xc.png" },
-    { name: "Alejandro", role: "Quality Assurance", image: "https://res.cloudinary.com/dpbghs8ep/image/upload/v1762560451/AlejandroFoto_pqtukx.png" },
-  ];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -115,41 +110,6 @@ export default function AboutUs() {
           que compartimos una misma meta: construir una experiencia de compra
           que conecte personas reales con marcas auténticas.
         </motion.p>
-
-        <div className="flex flex-wrap justify-center gap-6 sm:gap-10 max-w-7xl mx-auto">
-          {teamMember.map((member, i) => (
-            <motion.div
-              key={member.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              className={`relative flex flex-col items-center justify-end w-56 h-[28rem] rounded-[3rem] overflow-hidden shadow-lg text-center group transition-all duration-500 hover:scale-[1.03]
-                ${i === 0
-                  ? "bg-naranja"
-                  : i === 1
-                    ? "bg-chocolate"
-                    : i === 2
-                      ? "bg-naranja"
-                      : i === 3
-                        ? "bg-gris-calido"
-                        : "bg-chocolate"
-                }`}
-            >
-              <img
-                src={member.image}
-                alt={member.name}
-                className="absolute inset-0 w-full h-full object-cover opacity-80 grayscale group-hover:grayscale-0 group-hover:scale-110 group-hover:opacity-100 transition-all duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
-              <div className="relative z-10 p-5 text-white group-hover:-translate-y-6 group-hover:scale-110 transition-all duration-500">
-                <h4 className="text-lg font-semibold tracking-wide uppercase mb-1">
-                  {member.name}
-                </h4>
-                <p className="text-sm opacity-90">{member.role}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
       </section>
       <Footer />
     </div>

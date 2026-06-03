@@ -4,18 +4,11 @@ import NavBar from "../../../components/layout/NavBar";
 import ShoppingForm from "../../../components/forms/ShoppingForm";
 import StarRatingComponent from "../../../components/ui/StarRatingComponent";
 import ButtonComponent from "../../../components/ui/ButtonComponent";
-import FeaturedProductsSlider from "../../../components/data-display/FeaturedProductsSlider";
-import { IconArrowBackUp, IconChevronRight, IconX } from "@tabler/icons-react";
-import { Link, useParams } from "react-router-dom";
+import { IconArrowBackUp, IconX } from "@tabler/icons-react";
+import { useParams } from "react-router-dom";
 import type { Product } from "../infrastructure/useProducts";
 import { useProducts } from "../infrastructure/useProducts";
-import {
-  SkeletonProductPageMain,
-  SkeletonFeaturedSlider,
-  SkeletonSimilarProducts,
-  SkeletonFeatured,
-} from "../../../components/ui/AllSkeletons";
-import ProductCard from "../../../components/data-display/ProductCard";
+import { SkeletonProductPageMain } from "../../../components/ui/AllSkeletons";
 import { useAuth } from "../../../hooks/context/AuthContext";
 import { useAlert } from "../../../hooks/context/AlertContext";
 import { useNavigate } from "react-router-dom";
@@ -34,13 +27,11 @@ type BorderColors = {
 
 export default function ProductPage() {
   const { id } = useParams();
-  const { getProductById, getProductsByCategory, getProductsByStore } =
-    useProducts();
+  const { getProductById } = useProducts();
 
   const { addToCart } = useCart();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [product, setProduct] = useState<Product | null>(null);
-  const [prodStore, setProdStore] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<keyof BorderColors>("description");
   const [isZoomed, setIsZoomed] = useState(false);
@@ -56,48 +47,14 @@ export default function ProductPage() {
       try {
         const prod = await getProductById(Number(id));
         setProduct(prod);
-        if (prod?.store_id) {
-          const storeProducts = await getProductsByStore(prod.store_id);
-          setProdStore(
-            storeProducts.filter((p) => p.id !== prod.id).slice(0, 10)
-          );
-        } else {
-          setProdStore([]);
-        }
       } catch (err) {
-        console.error("Error al cargar producto o tienda:", err);
+        console.error("Error al cargar producto:", err);
       } finally {
         setTimeout(() => setLoading(false), 600);
       }
     })();
   }, [id]);
 
-  const [similarProducts, setSimilarProducts] = useState<Product[]>([]);
-
-  useEffect(() => {
-    if (!product) return;
-    (async () => {
-      try {
-        const categoryIds = product.categories?.map((c: any) => c.id) || [];
-        if (categoryIds.length === 0) {
-          setSimilarProducts([]);
-          return;
-        }
-        const allRelated: Product[] = [];
-        for (const catId of categoryIds) {
-          const products = await getProductsByCategory(catId);
-          allRelated.push(...products);
-        }
-        const unique = allRelated.filter(
-          (p, i, arr) =>
-            p.id !== product.id && arr.findIndex((x) => x.id === p.id) === i
-        );
-        setSimilarProducts(unique.slice(0, 10));
-      } catch (err) {
-        console.error("Error al cargar productos similares:", err);
-      }
-    })();
-  }, [product]);
 
   const handleAddToCart = async (productId: number, qty: number) => {
     if (!token) {
@@ -189,21 +146,7 @@ export default function ProductPage() {
         </section>
 
         {loading ? (
-          <>
-            <SkeletonProductPageMain show={loading} />
-            <section className="my-10 px-10">
-              <h2 className="text-2xl font-semibold font-quicksand">
-                Más de la tienda
-              </h2>
-              <SkeletonFeaturedSlider show={loading} />
-            </section>
-            <section className="my-10 px-10">
-              <h2 className="text-2xl font-semibold font-quicksand">
-                Productos similares
-              </h2>
-              <SkeletonSimilarProducts show={loading} />
-            </section>
-          </>
+          <SkeletonProductPageMain show={loading} />
         ) : (
           <>
             {product && (
@@ -217,12 +160,6 @@ export default function ProductPage() {
                     {/* 🔹 Título, tienda, rating */}
                     <div className="flex flex-col gap-3">
                       <h2 className="text-xl font-bold">{product.name}</h2>
-                      <Link
-                        to={`/store/${product.store_id}`}
-                        className="text-xs font-bold"
-                      >
-                        Visitar la tienda {product.store?.name || ""}
-                      </Link>
                       <div className="flex gap-2">
                         <StarRatingComponent
                           value={product.rating || 0}
@@ -498,76 +435,6 @@ export default function ProductPage() {
                   </div>
                 </section>
 
-                <section className="mx-5 sm:mx-10 my-6 sm:my-10">
-                  <h2 className="text-lg sm:text-2xl font-semibold font-quicksand">
-                    Más de {product.store?.name || "la tienda"}
-                  </h2>
-                  {loading ? (
-                    <SkeletonFeatured count={2} />
-                  ) : prodStore.length > 0 ? (
-                    <FeaturedProductsSlider
-                      products={prodStore.map((prod) => ({
-                        id: prod.id!,
-                        shop: prod.store?.name || "Sin tienda",
-                        title: prod.name,
-                        price: prod.price,
-                        discountPrice: prod.discount_price,
-                        rating: 0,
-                        img: prod.image_1_url || "https://res.cloudinary.com/dpbghs8ep/image/upload/v1761412207/imagenNoSubida_dymbb7.png",
-                      }))}
-                    />
-                  ) : (
-                    <p className="text-gray-500 my-5">
-                      La tienda no tiene más productos.
-                    </p>
-                  )}
-                </section>
-
-                <section className="mx-4 sm:mx-10 my-6 sm:my-10">
-                  <div className="flex justify-between items-center">
-                    <h2 className="text-lg sm:text-2xl font-semibold font-quicksand">
-                      Productos Similares
-                    </h2>
-                    <div className="flex items-center gap-1 text-sm sm:text-base">
-                      <a
-                        href="/search?mode=explore"
-                        className="font-quicksand font-semibold cursor-pointer"
-                      >
-                        Ver todo
-                      </a>
-                      <IconChevronRight className="inline w-4 h-4 sm:w-5 sm:h-5" />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 my-6 sm:my-10 gap-2 sm:gap-5">
-                    {similarProducts.length > 0 ? (
-                      similarProducts
-                        .slice(0, 10)
-                        .map((prod) => (
-                          <ProductCard
-                            key={prod.id}
-                            id={prod.id!}
-                            shop={prod.store?.name || "Sin tienda"}
-                            title={prod.name}
-                            price={prod.price}
-                            discountPrice={
-                              prod.discount_price
-                                ? prod.discount_price
-                                : undefined
-                            }
-                            img={
-                              prod.image_1_url ||
-                              "https://via.placeholder.com/200"
-                            }
-                            edit={"NONE"}
-                          />
-                        ))
-                    ) : (
-                      <p className="col-span-5 text-center text-sm text-gray-500 font-quicksand">
-                        No hay productos similares.
-                      </p>
-                    )}
-                  </div>
-                </section>
               </>
             )}
           </>
