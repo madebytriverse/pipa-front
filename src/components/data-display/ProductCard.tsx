@@ -1,7 +1,6 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IconEdit, IconShoppingBag, IconCheck } from "@tabler/icons-react";
 import ButtonComponent from "../ui/ButtonComponent";
-import { useAuth } from "../../hooks/context/AuthContext";
 import { useAlert } from "../../hooks/context/AlertContext";
 import HeartButton from "./HeartButton";
 import { useCart } from "../../hooks/context/CartContext";
@@ -16,16 +15,13 @@ interface ProductCardProps {
   discountPrice?: number;
   img?: string;
   edit: "EDIT" | "EDITING" | "NONE";
-  onEditClick?: (id: number) => void; // 👈 nueva prop
+  onEditClick?: (id: number) => void;
 }
 
-
 export default function ProductCard(props: ProductCardProps) {
-  const { token } = useAuth();
   const { addToCart } = useCart();
   const [added, setAdded] = useState(false);
   const { showAlert } = useAlert();
-  const navigate = useNavigate();
 
   const formatPrice = (value?: number) => {
     const num = Number(value) || 0;
@@ -39,22 +35,13 @@ export default function ProductCard(props: ProductCardProps) {
   };
 
   const handleAddToCart = async () => {
-    if (!token) {
-      showAlert({
-        title: "Inicia sesión",
-        message: "Debes iniciar sesión para agregar productos al carrito",
-        confirmText: "Ir al login",
-        cancelText: "Cancelar",
-        onConfirm: () => {
-          navigate("/loginRegister");
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        },
-      });
-      return;
-    }
-
     try {
-      await addToCart(props.id, 1);
+      await addToCart(props.id, 1, {
+        name: props.title,
+        price: props.price,
+        discount_price: props.discountPrice ?? null,
+        image_1_url: props.img ?? null,
+      });
     } catch (error) {
       console.error(error);
       showAlert({

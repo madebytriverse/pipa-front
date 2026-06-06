@@ -255,7 +255,7 @@ export default function CartPage() {
             </section>
           </div>
 
-          {/* 🧾 Formulario de compra */}
+          {/* 🧾 Formulario de compra (autenticado o invitado) */}
           <div className="my-5 sm:my-10 sm:pl-10 w-full sm:w-1/3">
             <ShoppingForm />
           </div>

@@ -9,9 +9,7 @@ import { useParams } from "react-router-dom";
 import type { Product } from "../infrastructure/useProducts";
 import { useProducts } from "../infrastructure/useProducts";
 import { SkeletonProductPageMain } from "../../../components/ui/AllSkeletons";
-import { useAuth } from "../../../hooks/context/AuthContext";
 import { useAlert } from "../../../hooks/context/AlertContext";
-import { useNavigate } from "react-router-dom";
 import AnimatedHeartButton from "../../../components/data-display/HeartButton";
 import { AnimatePresence, motion } from "framer-motion";
 import ShareComponent from "../../../components/data-display/ShareComponent";
@@ -36,9 +34,7 @@ export default function ProductPage() {
   const [activeTab, setActiveTab] = useState<keyof BorderColors>("description");
   const [isZoomed, setIsZoomed] = useState(false);
 
-  const { token } = useAuth();
   const { showAlert } = useAlert();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!id) return;
@@ -57,22 +53,14 @@ export default function ProductPage() {
 
 
   const handleAddToCart = async (productId: number, qty: number) => {
-    if (!token) {
-      showAlert({
-        title: "Inicia sesión",
-        message: "Debes iniciar sesión para agregar productos al carrito",
-        confirmText: "Ir al login",
-        cancelText: "Cancelar",
-        onConfirm: () => {
-          navigate("/loginRegister");
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        },
-      });
-      return;
-    }
-
     try {
-      await addToCart(productId, qty); // ✅ usa la cantidad enviada
+      await addToCart(productId, qty, {
+        name: product!.name,
+        price: product!.price,
+        discount_price: product!.discount_price ?? null,
+        image_1_url: product!.image_1_url ?? null,
+        stock: product!.stock,
+      });
       showAlert({
         title: "Producto añadido",
         message: `Se añadieron ${qty} ${qty > 1 ? "unidades" : "unidad"} al carrito correctamente`,

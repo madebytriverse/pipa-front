@@ -3,6 +3,7 @@ import axios from "axios";
 import { useCartTotals } from "./useCartTotals";
 import { useProducts } from "../../modules/store/infrastructure/useProducts";
 import { useCheckout } from "../../modules/cart/infraestructure/useCheckout";
+import { IconUser, IconMail, IconPhone } from "@tabler/icons-react";
 import { useCoupons } from "../../modules/admin/infrastructure/useCoupons";
 import {
   IconMapPin,
@@ -48,7 +49,7 @@ export default function ShoppingForm({
   productId,
   quantity = 1,
 }: ShoppingFormProps) {
-  const { processCheckout } = useCheckout();
+  const { processCheckout, processGuestCheckout } = useCheckout();
   const { totals, getTotals, loading, error } = useCartTotals();
   const { getProductById } = useProducts();
   const { validateCoupon } = useCoupons();
@@ -70,6 +71,10 @@ export default function ShoppingForm({
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const [savingAddress, setSavingAddress] = useState(false);
+
+  // 🧍 Campos del formulario de invitado
+  const [guestName, setGuestName] = useState("");
+  const [guestEmail, setGuestEmail] = useState("");
 
   const [localTotals, setLocalTotals] = useState<TotalsType>({
     subtotal: 0,
@@ -236,74 +241,132 @@ export default function ShoppingForm({
   // 💳 Pago con Stripe
   // ============================
   const handlePayment = async (paymentIntent: any) => {
-  const selected = addresses.find((a) => a.id === selectedAddressId);
+    const isGuest = !user || !token;
 
-  const finalAddress = selected
-    ? selected
-    : {
-        street,
-        city,
-        state,
-        country,
-        zip_code: zipCode,
-        phone_number: phoneNumber,
-      };
+    if (isGuest) {
+      // Validaciones mínimas del invitado
+      if (!guestName.trim() || !guestEmail.trim()) {
+        showAlert({
+          title: "Datos requeridos",
+          message: "Por favor completa tu nombre y correo electrónico.",
+          type: "warning",
+        });
+        return;
+      }
 
-  if (!finalAddress.street || !finalAddress.city) {
-    showAlert({
-      title: "Dirección requerida",
-      message:
-        "Debes seleccionar una dirección guardada o escribir una nueva antes de continuar.",
-      type: "warning",
-    });
-    return;
-  }
+      if (!street.trim() || !city.trim()) {
+        showAlert({
+          title: "Dirección requerida",
+          message: "Por favor completa al menos la calle y ciudad antes de continuar.",
+          type: "warning",
+        });
+        return;
+      }
 
-  try {
-    // 💳 Procesar pago normalmente
-    await processCheckout(paymentIntent, totals, finalAddress);
+      const guestItems = (cart?.items ?? []).map((item) => ({
+        product_id: item.product.id,
+        store_id: item.product.store?.id ?? null,
+        quantity: Number(item.quantity),
+        unit_price: item.product.discount_price
+          ? Number(item.product.discount_price)
+          : Number(item.product.price),
+      }));
 
-    // ✅ Mostrar alerta de éxito
-    await showAlert({
-      title: "Pago completado",
-      message: "Tu compra se ha realizado con éxito 🎉",
-      type: "success",
-      confirmText: "Aceptar",
-    });
+      try {
+        await processGuestCheckout(
+          paymentIntent,
+          localTotals,
+          {
+            guest_name: guestName,
+            guest_email: guestEmail,
+            guest_phone: phoneNumber,
+            street,
+            city,
+            state,
+            zip_code: zipCode,
+            country: country || "Costa Rica",
+          },
+          guestItems
+        );
 
-    // 🧹 Limpiar los campos de dirección
-    setSelectedAddressId(null);
-    setStreet("");
-    setCity("");
-    setState("");
-    setCountry("");
-    setZipCode("");
-    setPhoneNumber("");
+        // Limpiar campos
+        setGuestName("");
+        setGuestEmail("");
+        setStreet("");
+        setCity("");
+        setState("");
+        setCountry("");
+        setZipCode("");
+        setPhoneNumber("");
+        setCouponCode("");
+        setAppliedCoupon(null);
+        setDiscount(0);
+        setCouponMessage("");
+        setLocalTotals({ subtotal: 0, taxes: 0, shipping: 0, total: 0, currency: "CRC" });
+      } catch (error) {
+        console.error("❌ Error en guest checkout:", error);
+      }
+      return;
+    }
 
-    // 🧾 Limpiar todo lo relacionado con cupones
-    setCouponCode("");
-    setAppliedCoupon(null);
-    setDiscount(0);
-    setCouponMessage("");
+    // --- Checkout autenticado ---
+    const selected = addresses.find((a) => a.id === selectedAddressId);
 
-    // 🔄 Resetear totales locales
-    setLocalTotals({
-      subtotal: 0,
-      taxes: 0,
-      shipping: 0,
-      total: 0,
-      currency: "CRC",
-    });
-  } catch (error) {
-    console.error("❌ Error al procesar el pago:", error);
-    showAlert({
-      title: "Error en el pago",
-      message: "Hubo un problema al procesar el pago. Intenta nuevamente.",
-      type: "error",
-      confirmText: "Aceptar",
-    });
-  }
-};
+    const finalAddress = selected
+      ? selected
+      : {
+          street,
+          city,
+          state,
+          country,
+          zip_code: zipCode,
+          phone_number: phoneNumber,
+        };
+
+    if (!finalAddress.street || !finalAddress.city) {
+      showAlert({
+        title: "Dirección requerida",
+        message:
+          "Debes seleccionar una dirección guardada o escribir una nueva antes de continuar.",
+        type: "warning",
+      });
+      return;
+    }
+
+    try {
+      await processCheckout(paymentIntent, totals, finalAddress);
+
+      await showAlert({
+        title: "Pago completado",
+        message: "Tu compra se ha realizado con éxito 🎉",
+        type: "success",
+        confirmText: "Aceptar",
+      });
+
+      setSelectedAddressId(null);
+      setStreet("");
+      setCity("");
+      setState("");
+      setCountry("");
+      setZipCode("");
+      setPhoneNumber("");
+
+      setCouponCode("");
+      setAppliedCoupon(null);
+      setDiscount(0);
+      setCouponMessage("");
+
+      setLocalTotals({ subtotal: 0, taxes: 0, shipping: 0, total: 0, currency: "CRC" });
+    } catch (error) {
+      console.error("❌ Error al procesar el pago:", error);
+      showAlert({
+        title: "Error en el pago",
+        message: "Hubo un problema al procesar el pago. Intenta nuevamente.",
+        type: "error",
+        confirmText: "Aceptar",
+      });
+    }
+  };
 
 
   // ============================
@@ -324,20 +387,7 @@ export default function ShoppingForm({
         {variant === "product" ? "Detalles del producto" : "Detalles de la compra"}
       </h2>
 
-      {/* 🔹 Si no hay sesión */}
-      {variant === "checkout" && (!user || !token) ? (
-        <div className="mt-6 p-5 border border-red-300 bg-red-50 rounded-lg text-center text-red-700">
-          <p className="font-semibold mb-3">
-            Debes iniciar sesión para ver los detalles de tu compra.
-          </p>
-          <Button
-            onClick={() => navigate("/loginRegister")}
-            className="bg-contrast-secondary hover:bg-main text-white rounded-full px-6"
-          >
-            Iniciar sesión
-          </Button>
-        </div>
-      ) : loading ? (
+      {loading ? (
         <p className="text-gray-500 mt-5">Cargando totales...</p>
       ) : error ? (
         <p className="text-red-500 mt-5">{error}</p>
@@ -510,6 +560,102 @@ export default function ShoppingForm({
                 </div>
               )}
             </div>
+          )}
+
+          {/* 🧍 Formulario de invitado */}
+          {variant === "checkout" && (!user || !token) && (
+            <>
+              <div className="pt-10 flex flex-col gap-3 text-[#4C1D95]">
+                <label className="flex items-center gap-2 text-base font-semibold">
+                  <IconUser className="text-[#6B21A8]" />
+                  Datos de contacto
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <input
+                    type="text"
+                    value={guestName}
+                    onChange={(e) => setGuestName(e.target.value)}
+                    placeholder="Nombre completo *"
+                    className="border border-[#C4B5FD] rounded-lg px-3 py-2 col-span-2"
+                  />
+                  <input
+                    type="email"
+                    value={guestEmail}
+                    onChange={(e) => setGuestEmail(e.target.value)}
+                    placeholder="Correo electrónico *"
+                    className="border border-[#C4B5FD] rounded-lg px-3 py-2"
+                  />
+                  <input
+                    type="text"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    placeholder="Teléfono"
+                    className="border border-[#C4B5FD] rounded-lg px-3 py-2"
+                  />
+                </div>
+
+                <label className="flex items-center gap-2 text-base font-semibold mt-4">
+                  <IconMapPin className="text-[#6B21A8]" />
+                  Dirección de envío
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <input
+                    type="text"
+                    value={street}
+                    onChange={(e) => setStreet(e.target.value)}
+                    placeholder="Calle *"
+                    className="border border-[#C4B5FD] rounded-lg px-3 py-2 col-span-2"
+                  />
+                  <input
+                    type="text"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    placeholder="Ciudad *"
+                    className="border border-[#C4B5FD] rounded-lg px-3 py-2"
+                  />
+                  <input
+                    type="text"
+                    value={state}
+                    onChange={(e) => setState(e.target.value)}
+                    placeholder="Provincia"
+                    className="border border-[#C4B5FD] rounded-lg px-3 py-2"
+                  />
+                  <input
+                    type="text"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    placeholder="País"
+                    className="border border-[#C4B5FD] rounded-lg px-3 py-2"
+                  />
+                  <input
+                    type="text"
+                    value={zipCode}
+                    onChange={(e) => setZipCode(e.target.value)}
+                    placeholder="Código postal"
+                    className="border border-[#C4B5FD] rounded-lg px-3 py-2"
+                  />
+                </div>
+
+                <p className="text-xs text-gray-500 mt-2">
+                  ¿Ya tienes cuenta?{" "}
+                  <button
+                    onClick={() => navigate("/loginRegister")}
+                    className="text-[#7C3AED] underline hover:text-[#5B21B6]"
+                  >
+                    Inicia sesión
+                  </button>
+                </p>
+              </div>
+
+              <div className="pt-10">
+                <Elements stripe={stripePromise}>
+                  <StripePaymentForm
+                    total={localTotals?.total || 0}
+                    onPaymentSuccess={handlePayment}
+                  />
+                </Elements>
+              </div>
+            </>
           )}
 
           {/* 🏠 Dirección + Stripe */}

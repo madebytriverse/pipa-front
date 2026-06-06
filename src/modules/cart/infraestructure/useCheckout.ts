@@ -165,5 +165,117 @@ export function useCheckout() {
     }
   };
 
-  return { processCheckout };
+  const processGuestCheckout = async (
+    paymentIntent: any,
+    totals: any,
+    guestData: {
+      guest_name: string;
+      guest_email: string;
+      guest_phone?: string;
+      street?: string;
+      city?: string;
+      state?: string;
+      zip_code?: string;
+      country?: string;
+    },
+    guestCart: { product_id: number; store_id: number | null; quantity: number; unit_price: number }[]
+  ) => {
+    try {
+      if (!guestCart || guestCart.length === 0) {
+        showAlert({
+          title: "Carrito vacío",
+          message: "No hay productos para procesar el pago 🛒",
+          type: "warning",
+        });
+        return;
+      }
+
+      if (!guestData.street?.trim()) {
+        showAlert({
+          title: "Dirección requerida 🏠",
+          message: "Por favor escribe una dirección antes de pagar.",
+          type: "warning",
+        });
+        return;
+      }
+
+      // 🧾 Crear orden de invitado
+      const { data: initData } = await axios.post("/checkout/guest/init", {
+        ...guestData,
+        subtotal: totals?.subtotal || 0,
+        shipping: totals?.shipping || 0,
+        taxes: totals?.taxes || 0,
+        total: totals?.total || 0,
+        country: guestData.country || "Costa Rica",
+      });
+
+      const orderId = initData?.order?.id;
+      console.log("🧾 Orden de invitado creada:", orderId);
+
+      // 🧩 Enviar items
+      const { data: itemsRes } = await axios.post("/checkout/guest/items", {
+        order_id: orderId,
+        items: guestCart,
+      });
+
+      if (itemsRes?.error && itemsRes.message.includes("stock")) {
+        showAlert({
+          title: "Stock insuficiente ⚠️",
+          message: "Uno o más productos no tienen stock suficiente. El pago fue cancelado.",
+          type: "error",
+        });
+
+        await axios.post("/checkout/guest/confirm", {
+          order_id: orderId,
+          status: "CANCELLED",
+          payment_id: paymentIntent?.id || "N/A",
+          payment_method: paymentIntent?.payment_method_types?.[0]?.toUpperCase() || "CARD",
+        });
+        return;
+      }
+
+      // 🧩 Confirmar orden
+      const { data: confirmRes } = await axios.post("/checkout/guest/confirm", {
+        order_id: orderId,
+        status: paymentIntent?.status === "succeeded" ? "PAID" : "FAILED",
+        payment_id: paymentIntent?.id || "N/A",
+        payment_method: paymentIntent?.payment_method_types?.[0]?.toUpperCase() || "CARD",
+      });
+
+      console.log("✅ Orden de invitado confirmada:", confirmRes);
+
+      if (paymentIntent?.status === "succeeded") {
+        // Limpiar carrito local (localStorage)
+        localStorage.removeItem("guestCart");
+        await clearCart();
+        await clearTotals();
+
+        showAlert({
+          title: "Pago exitoso 💳",
+          message: "Tu orden fue enviada correctamente 🧾🚚",
+          type: "success",
+        });
+      } else {
+        showAlert({
+          title: "Pago fallido ❌",
+          message: "El pago no se completó correctamente. Intenta nuevamente.",
+          type: "error",
+        });
+      }
+
+      return confirmRes;
+    } catch (err: any) {
+      console.error("❌ Error en guest checkout:", err.response?.data || err);
+      showAlert({
+        title: "Error del servidor",
+        message:
+          err.response?.data?.message ||
+          "No se pudo registrar la orden. Revisa los datos del pago.",
+        type: "error",
+      });
+      throw err;
+    }
+  };
+
+  return { processCheckout, processGuestCheckout };
 }

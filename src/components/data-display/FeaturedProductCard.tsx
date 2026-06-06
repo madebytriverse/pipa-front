@@ -2,8 +2,7 @@ import { useState } from "react";
 import { IconCheck, IconEdit } from "@tabler/icons-react";
 import ButtonComponent from "../ui/ButtonComponent";
 import RaitingComponent from "../ui/StarRatingComponent";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/context/AuthContext";
+import { Link } from "react-router-dom";
 import { useAlert } from "../../hooks/context/AlertContext";
 import HeartButton from "./HeartButton";
 import { useCart } from "../../hooks/context/CartContext";
@@ -22,32 +21,21 @@ interface FeaturedProductCardProps {
 }
 
 export default function FeaturedProductCard(props: FeaturedProductCardProps) {
-  const { token } = useAuth();
   const { addToCart } = useCart();
   const { showAlert } = useAlert();
-  const navigate = useNavigate();
   const [added, setAdded] = useState(false);
 
   const discountValue = Number(props.discountPrice);
   const hasDiscount = !isNaN(discountValue) && discountValue > 0;
 
   const handleAddToCart = async () => {
-    if (!token) {
-      showAlert({
-        title: "Inicia sesión",
-        message: "Debes iniciar sesión para agregar productos al carrito",
-        confirmText: "Ir al login",
-        cancelText: "Cancelar",
-        onConfirm: () => {
-          navigate("/loginRegister");
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        },
-      });
-      return;
-    }
-
     try {
-      await addToCart(props.id, 1);
+      await addToCart(props.id, 1, {
+        name: props.title,
+        price: props.price,
+        discount_price: props.discountPrice ?? null,
+        image_1_url: props.img ?? null,
+      });
       setAdded(true);
       setTimeout(() => setAdded(false), 2000);
     } catch (error) {
